@@ -19,10 +19,10 @@ Complex Parser is a powerful Python package designed to streamline the process o
 
 ## Installation
 
-You can install Complex Parserr via pip:
+You can install Complex Parser via pip:
 
 ```bash
-pip install Complex Parser
+pip install complex-parser
 ```
 
 ## Usage: 
