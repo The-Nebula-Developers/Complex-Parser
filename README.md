@@ -19,10 +19,10 @@ Complex Parser is a powerful Python package designed to streamline the process o
 
 ## Installation
 
-You can install Json Data Extractor Synonymizer via pip:
+You can install Complex Parserr via pip:
 
 ```bash
-pip install json-data-extractor-synonymizer
+pip install Complex Parser
 ```
 
 ## Usage: 
