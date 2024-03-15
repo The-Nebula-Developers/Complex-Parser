@@ -25,11 +25,6 @@ You can install Complex Parser via pip:
 pip install complex-parser
 ```
 
-You can also install Via pip: 
-```bash
-pip install complex-parser
-```
-
 ## Usage: 
 
 Here's a simple example demonstrating how to use the package
