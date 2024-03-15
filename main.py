@@ -1,6 +1,29 @@
 import json
+import datetime
 from fuzzywuzzy import fuzz
 from nltk.corpus import wordnet
+from concurrent.futures import ThreadPoolExecutor
+import psutil
+
+def get_optimal_max_workers():
+    """
+    Get the optimal number of workers based on system hardware.
+
+    Returns:
+        int: The optimal number of workers based on available CPU cores and memory.
+
+    Notes:
+        This function calculates the optimal number of workers based on the system's hardware resources.
+        It considers the number of CPU cores and available memory to determine the maximum number of workers
+        that can be utilized efficiently. The maximum number of workers is set to be half of the available memory
+        in gigabytes or the number of CPU cores, whichever is smaller.
+    """
+    num_cores = psutil.cpu_count(logical=False) or psutil.cpu_count()
+
+    available_memory_gb = psutil.virtual_memory().available / (1024 ** 3)
+
+    max_workers = max(num_cores, int(available_memory_gb))  
+    return max_workers
 
 def extract_data(data: dict, format_keys: list, load_lists: dict) -> list:
     '''
@@ -53,11 +76,15 @@ def extract_data(data: dict, format_keys: list, load_lists: dict) -> list:
                                 break
             if all(matches.values()):
                 extracted_data.append(data)
-            for value in data.values():
-                extracted_data.extend(extract_data(value, format_keys, load_lists))
+            with ThreadPoolExecutor(max_workers=get_optimal_max_workers()) as executor:  
+                for value in data.values():
+                    future = executor.submit(extract_data, value, format_keys, load_lists)
+                    extracted_data.extend(future.result())
         elif isinstance(data, list):
-            for item in data:
-                extracted_data.extend(extract_data(item, format_keys, load_lists))
+            with ThreadPoolExecutor(max_workers=get_optimal_max_workers()) as executor:  
+                for item in data:
+                    future = executor.submit(extract_data, item, format_keys, load_lists)
+                    extracted_data.extend(future.result())
         return extracted_data
     except Exception as e:
         print(f"[-] An Error has Occurred - {e}")
