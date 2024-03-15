@@ -8,6 +8,7 @@ Complex Parser is a powerful Python package designed to streamline the process o
 - **Structured Data Extraction:** Extract specific data elements from nested JSON-like structures based on user-specified format keys.
 - **Customizable Format Keys:** Define format keys to precisely target the data elements you need, making it adaptable to a wide range of data structures.
 - **Efficient Data Parsing:** Utilizes efficient algorithms to parse through the data and extract relevant information with minimal computational overhead.
+- **Thread Based chuncking:** Utilises threads to quickly sort through larger data sets. 
 
 ### Synonym Retrieval
 - **Semantic Enrichment:** Enhance the semantic richness of your data by retrieving synonyms for key terms using both WordNet and custom synonym lists.
